@@ -1,0 +1,6 @@
+@api_dex_one_HostAddress = http://localhost:5064
+
+GET {{api_dex_one_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

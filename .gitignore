@@ -1,0 +1,75 @@
+# Archivos de compilación
+bin/
+obj/
+
+# Archivos de usuario de Visual Studio
+.vs/
+
+# Archivos de usuario de Rider (IDE)
+.idea/
+
+# Archivos de paquetes
+*.nupkg
+# Ignorar todos los archivos de configuración locales
+appsettings.*.json
+appsettings.*.yml
+# Ignorar el archivo de configuración de secrets
+secrets.json
+
+# Archivos de registro
+*.log
+
+# Archivos de base de datos
+*.db
+*.sqlite3
+*.sqlite
+
+# Archivos de caché
+*.cache
+
+# Archivos de prueba
+TestResults/
+
+# Archivos de Resharper
+_ReSharper*/
+
+# Archivos de Azure DevOps
+.azure/
+
+# Archivos de Node.js
+node_modules/
+
+# Archivos de paquetes de NuGet
+*.nupkg
+# Archivos de paquetes de NuGet v3
+*.nuspec
+*.nuget.props
+*.nuget.targets
+
+# Archivos de Microsoft Azure Build
+azureBuild/
+
+# Archivos de Microsoft Azure Emulator
+csx/
+*.build.csdef
+
+# Archivos de Microsoft Azure Application Insights
+ApplicationInsights/
+
+# Archivos de Microsoft Azure Data Lake Tools
+*.azsproj
+jryp/
+
+# Archivos de Microsoft Azure Stream Analytics
+*.jsavro
+*.jsasa
+
+# Archivos de Microsoft Azure Stream Analytics local run
+ASA/
+
+# Archivos de Microsoft Azure Stream Analytics local run
+*.trx
+*.testsettings
+test*.config
+*.VisualState.xml
+TestResult*/
