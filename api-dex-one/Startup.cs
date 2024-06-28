@@ -7,6 +7,7 @@ public static class Startup
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration, ILogger logger)
     {
         logger.LogInformation("========Configuring services...");
+
         services.AddControllers().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
@@ -18,8 +19,15 @@ public static class Startup
             options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
         });
 
-        services.AddDbContext<MyDbContext>(options => options.UseInMemoryDatabase("MyDatabase"));
-        IniciarData();
+
+        //services.AddDbContext<MyDbContext>(options => options.UseInMemoryDatabase("MyDatabase"));
+        services.AddDbContext<MyDbContext>(options =>
+        {
+            options.UseSqlServer(configuration.GetConnectionString("comercialDatabase"));
+        });
+        
+        
+        //IniciarData();
 
         services.AddHealthChecks();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
