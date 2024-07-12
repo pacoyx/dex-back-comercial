@@ -15,14 +15,14 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
     {
-        var products = await _productService.GetAll();
+        var products = await _productService.GetAllProductosAsync();
         return Ok(new ApiResponse { Code = 100, Message = "Productos encontradas", Data = products.Select(p => p.AsSelectAllProductDto())});
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<SelectAllProductDto>> GetProductById(int id)
     {
-        var product = await _productService.GetById(id);
+        var product = await _productService.GetProductoByIdAsync(id);
         if (product == null)
         {
             return NotFound(new ApiResponse { Code = 99, Message = "Producto no encontrado", Data = null });
@@ -34,7 +34,7 @@ public class ProductController : ControllerBase
     public async Task<ActionResult> CreateProduct(CreateProductDto createProductDto)
     {
         var product = createProductDto.AsProduct();
-        await _productService.Create(product);
+        await _productService.CreateProductoAsync(product);
         return Ok(new ApiResponse { Code = 100, Message = "Producto creado", Data = product.AsSelectAllProductDto() });
     }
 
@@ -47,8 +47,8 @@ public class ProductController : ControllerBase
         }
 
         var product = productDto.AsProduct();
-        var updated = await _productService.Update(id, product);
-        if (!updated)
+        var updated = await _productService.UpdateProductoAsync(id, product);
+        if (updated == 0)
         {
             return NotFound(new ApiResponse { Code = 99, Message = "Producto no encontrado", Data = null });
         }
@@ -58,8 +58,8 @@ public class ProductController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
-        var deleted = await _productService.Delete(id);
-        if (!deleted)
+        var deleted = await _productService.DeleteProductoAsync(id);
+        if (deleted == 0)
         {
             return NotFound(new ApiResponse { Code = 99, Message = "Producto no encontrado", Data = null });
         }

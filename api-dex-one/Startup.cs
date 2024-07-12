@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using api_dex_one.Repositories.Interfaces;
 
 public static class Startup
 {
@@ -25,9 +26,11 @@ public static class Startup
         {
             options.UseSqlServer(configuration.GetConnectionString("comercialDatabase"));
         });
-        
-        
+
+
         //IniciarData();
+
+        services.AddScoped<IProductoRepository, ProductRepository>();
 
         services.AddHealthChecks();
         services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -1,3 +1,6 @@
+using api_dex_one.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 public class UnitOfWork : IUnitOfWork
 {
     private readonly MyDbContext _context;
@@ -7,7 +10,14 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<SequentialNumber> SequentialNumbers { get; private set; }
     public IRepository<Company> Companies { get; private set; }
     public IRepository<CategoryProd> CategoryProds { get; private set; }
-    public IRepository<Product> Products { get; private set; }
+
+
+
+    private IProductoRepository _productosRepository;
+    public IProductoRepository Productos => _productosRepository ??= new ProductRepository(_context);
+
+
+
     public IRepository<ExpenseBox> ExpenseBoxes { get; private set; }
     public IRepository<Customer> Customers { get; private set; }
     public IRepository<User> Users { get; private set; }
@@ -30,7 +40,7 @@ public class UnitOfWork : IUnitOfWork
         Companies = new CompanyRepository(_context);
         CategoryProds = new CategoryProdRepository(_context);
         Customers = new CustomerRepository(_context);
-        Products = new ProductRepository(_context);
+        // Products = new ProductRepository(_context);
         Users = new UserRepository(_context);        
         UsersPlus = new UserPlusRepository(_context);
         PriceListMains = new PriceListRepository(_context);
@@ -46,10 +56,15 @@ public class UnitOfWork : IUnitOfWork
     public async void Complete()
     {
         await _context.SaveChangesAsync();
-    }
 
+    }
+    public async Task<int> CompleteAsync()
+    {
+        return await _context.SaveChangesAsync();
+    }
     public void Dispose()
     {
         _context.Dispose();
     }
+
 }

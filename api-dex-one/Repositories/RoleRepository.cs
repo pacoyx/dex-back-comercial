@@ -15,6 +15,7 @@ public class RoleRepository : IRepository<Role>
 
     public void Delete(Role role)
     {
+
         _context.Roles.Remove(role);
     }
 

@@ -1,40 +1,36 @@
+using api_dex_one.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-public class ProductRepository : IRepository<Product>
+
+public class ProductRepository : IProductoRepository
 {
-    private readonly MyDbContext _context;
+    private readonly MyDbContext _dbContext;
     public ProductRepository(MyDbContext context)
     {
-        _context = context;
+        _dbContext = context;
     }
 
-    public async Task Create(Product product)
+    public async Task<Product> GetByIdAsync(int id)
     {
-        await _context.Products.AddAsync(product);
+        return await _dbContext.Products.FindAsync(id);
     }
 
-    public void Update(Product product)
+    public async Task<IEnumerable<Product>> GetAllAsync()
     {
-        _context.Products.Update(product);
+        return await _dbContext.Products.ToListAsync();
     }
 
-    public void Delete(Product product)
+    public void Add(Product producto)
     {
-        _context.Products.Remove(product);
+        _dbContext.Products.Add(producto);
     }
 
-    public async Task<IEnumerable<Product>> GetAll()
+    public void Update(Product producto)
     {
-        return await _context.Products.ToListAsync();
+        _dbContext.Products.Update(producto);
     }
 
-    public async Task<Product?> GetById(int id)
+    public void Remove(Product producto)
     {
-        var product = await _context.Products.FindAsync(id);
-        if (product == null)
-        {
-            return null;
-        }
-        _context.Entry(product).State = EntityState.Detached;
-        return product;
+        _dbContext.Products.Remove(producto);
     }
 }
